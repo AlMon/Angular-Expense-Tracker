@@ -1,11 +1,21 @@
-<div class="row" ng-init="getExpenses()">
+<div class="row" ng-init="getSheets()">
   <div class="col-3">
     <form name="sheetForm" ng-submit="addSheet()" novalidate>
-      <p class="text-center sheet-date">{{date | date: "fullDate"}}</p>
-      <input name="budget" type="number" ng-model="budget" required placeholder="What's Today's Budget?" ng-required="true">
+      <h5 class="text-center title">Add Sheet:</h5>
+      <input name="budget" type="text" ng-model="budget" required placeholder="What's Today's Budget?" ng-required="true">
       <div class="center">
-        <button name="submit" ng-disabled="sheetForm.$invalid" class="add-btn">Add Contact</button>
+        <button name="submit" ng-disabled="sheetForm.$invalid" class="add-btn">Add Budget Sheet</button>
       </div>
     </form>
+  </div>
+  <div class="col-3" ng-repeat="sheet in sheets">    
+    <div class="card">
+      <p class="card-date text-center">{{sheet.sheetId | date:"mediumDate"}}</p>
+      <h1 class="card-budget text-center">${{sheet.budget}}</h1>
+      <div class="text-center">
+        <button ui-sref="sheet({id: sheet.sheetId})" class="see-btn">See Sheet</button>
+        <button ng-click="deleteSheet($index)" class="delete-btn">Delete</button>
+      </div>
+    </div>
   </div>
 </div>

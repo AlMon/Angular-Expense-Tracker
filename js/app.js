@@ -1,8 +1,7 @@
 var et = angular.module("et", ["LocalStorageModule", "xeditable", "ngAnimate", "truncate", "ui.router"]);
 
 
-et.config(["$stateProvider", "$urlRouterProvider", "$locationProvider", "localStorageServiceProvider", 
-  function($stateProvider, $urlRouterProvider, $locationProvider, localStorageServiceProvider){
+et.config(["$stateProvider", "$urlRouterProvider", "$locationProvider", "localStorageServiceProvider", function($stateProvider, $urlRouterProvider, $locationProvider, localStorageServiceProvider){
   localStorageServiceProvider.setPrefix('expenseTracker');
   $locationProvider.html5Mode(false)
   .hashPrefix('!');
@@ -13,26 +12,28 @@ et.config(["$stateProvider", "$urlRouterProvider", "$locationProvider", "localSt
   .state("home", {
     url: "/",
     templateUrl: "views/home.html",
-    controller: "ExpensesCtrl"
+    controller: "SheetCtrl"
+  })
+  .state("sheet", {
+    url: "/:id",
+    templateUrl: "views/sheet.html",
+    controller: "SheetCtrl"
   });
   
 }]);
-
 
 et.run(function(editableOptions) {
   editableOptions.theme = 'default';
 });
 
-
-et.controller("ExpensesCtrl", ["$scope", "localStorageService", "$stateParams", function($scope, localStorageService, $stateParams){
-  
-  $scope.date = new Date();
+et.controller("SheetCtrl", ["$scope", "localStorageService", "$stateParams", "$filter", 
+    function($scope, localStorageService, $stateParams, $filter){
   
   $scope.sheets = [];
   
-  $scope.getExpenses = function(){
-    if(localStorageService.get("expenseData")){
-      $scope.sheets = localStorageService.get("expenseData");
+  $scope.getSheets = function(){
+    if(localStorageService.get("sheetData")){
+      $scope.sheets = localStorageService.get("sheetData");
     } else {
       $scope.sheets = [];
     }
@@ -40,26 +41,26 @@ et.controller("ExpensesCtrl", ["$scope", "localStorageService", "$stateParams", 
   
   $scope.addSheet = function(){
     $scope.sheets.unshift({
-      phone: $scope.budget,
-      contactId: Date.now()
+      budget: $scope.budget,
+      sheetId: new Date()
     });
-    localStorageService.set("expenseData", $scope.sheets);
+    localStorageService.set("sheetData", $scope.sheets);
     $scope.budget = ""
   }
   
-  $scope.updateExpenses = function(){
-    localStorageService.set("expenseData", $scope.sheets);
+  $scope.updateSheet = function(){
+    localStorageService.set("sheetData", $scope.sheets);
   }
   
   $scope.currentId = $stateParams.id;  
   
-  $scope.deleteContact = function(start){
+  $scope.deleteSheet = function(start){
     var confirmDelete = confirm("Are you sure you want to delete this expense sheet?");
     if (confirmDelete) {
       $scope.sheets.splice(start, 1);
-      localStorageService.set("expenseData", $scope.sheets);
+      localStorageService.set("sheetData", $scope.sheets);
     }
-    localStorageService.set("expenseData", $scope.sheets);
+    localStorageService.set("sheetData", $scope.sheets);
   }
   
 }]);
