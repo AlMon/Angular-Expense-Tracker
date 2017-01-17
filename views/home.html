@@ -1,0 +1,11 @@
+<div class="row" ng-init="getExpenses()">
+  <div class="col-3">
+    <form name="sheetForm" ng-submit="addSheet()" novalidate>
+      <p class="text-center sheet-date">{{date | date: "fullDate"}}</p>
+      <input name="budget" type="number" ng-model="budget" required placeholder="What's Today's Budget?" ng-required="true">
+      <div class="center">
+        <button name="submit" ng-disabled="sheetForm.$invalid" class="add-btn">Add Contact</button>
+      </div>
+    </form>
+  </div>
+</div>
