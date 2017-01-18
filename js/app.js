@@ -30,23 +30,27 @@ et.controller("SheetCtrl", ["$scope", "localStorageService", "$stateParams", "$f
     function($scope, localStorageService, $stateParams, $filter){
   
   $scope.sheets = [];
+  $scope.expenses = [];
   
   $scope.getSheets = function(){
     if(localStorageService.get("sheetData")){
       $scope.sheets = localStorageService.get("sheetData");
     } else {
       $scope.sheets = [];
+      $scope.expenses = [];
     }
   }
   
   $scope.addSheet = function(){
     $scope.sheets.unshift({
       budget: $scope.budget,
-      sheetId: new Date()
+      sheetId: Date.now()
     });
     localStorageService.set("sheetData", $scope.sheets);
     $scope.budget = ""
   }
+  
+  
   
   $scope.updateSheet = function(){
     localStorageService.set("sheetData", $scope.sheets);

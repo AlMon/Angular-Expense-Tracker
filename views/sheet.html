@@ -2,15 +2,11 @@
   <div class="col-3"></div>
   <div class="col-6">
     <div ng-repeat="sheet in sheets | filter:currentId">
-      <h1 class="text-center" editable-text="sheet.budget" onaftersave="updateSheet()" e-required>${{sheet.budget}}</h1>
+      <h1 class="text-center" editable-text="sheet.budget" onaftersave="updateSheet()" e-required>{{sheet.budget - sheet.expenses | currency}}</h1>
     </div>
+    <form name="expenseForm" ng-submit="addExpense(expense)">
+      <input type="number" ng-model="expense">
+      <span><button>Add Expense</button></span>
+    </form>
   </div>
-</div>
-
-<div class="row">
-  <div class="col-3"></div>
-  <div class="col-6 text-center">
-    <button ui-sref="home"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Go Back To All Budget Sheets</button>
-  </div>
-  <div class="col-3"></div>
 </div>

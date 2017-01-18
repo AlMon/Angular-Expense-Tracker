@@ -21,9 +21,9 @@ button {
 }
 
 .card .card-budget {
-  font-size: 6rem;
-  margin-bottom: 0.5rem;
-  margin-top: 0px;
+  font-size: 6.5rem;
+  margin-bottom: 1.5rem;
+  margin-top: 1rem;
   font-weight: 700;
 }
 
@@ -32,10 +32,6 @@ button {
   font-size: 1em;
   margin-bottom: 0px;
   margin-top: 0px;
-}
-
-.card .card-body {
-  margin-top: 5px;
 }
 
 .see-btn {
@@ -58,25 +54,17 @@ button {
   color: #000;
 }
 
-.note-title {
-  font-weight: 500;
-  border-bottom: none !important;
-  color: #000;
-}
-
-.note-category {
-  line-height: 0;
-  font-size: 2rem;
-  color: #B3B3B3;
-  border-bottom: none !important;
-}
-
-.note-content {
-  font-size: 1.8rem;
-  line-height: 27px;
-  border-bottom: none !important;
-  color: #000;
-  white-space: pre-line;
+input[type="number"] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0px;
+    display: inline-block;
+    border: 1px solid #CCC;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: all 0.5s ease 0s;
+    outline: 0px none;
+    font-family: "Open Sans";
 }
 
 .edit-box {
