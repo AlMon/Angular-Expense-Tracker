@@ -11,7 +11,7 @@
   <div class="col-3" ng-repeat="sheet in sheets">    
     <div class="card">
       <p class="card-date text-center">{{sheet.sheetId | date:"mediumDate"}}</p>
-      <h1 class="card-budget text-center">{{sheet.budget | currency:undefined:0}}</h1>
+      <h1 class="card-budget text-center">{{sheet.budget - sheet.expenses | currency:undefined:0}}</h1>
       <div class="text-center">
         <button ui-sref="sheet({id: sheet.sheetId})" class="see-btn">See Sheet</button>
         <button ng-click="deleteSheet($index)" class="delete-btn">Delete</button>
