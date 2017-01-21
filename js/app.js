@@ -12,12 +12,7 @@ et.config(["$stateProvider", "$urlRouterProvider", "$locationProvider", "localSt
   .state("home", {
     url: "/",
     templateUrl: "views/home.html",
-    controller: "SheetCtrl"
-  })
-  .state("sheet", {
-    url: "/:id",
-    templateUrl: "views/sheet.html",
-    controller: "SheetCtrl"
+    controller: "ExpensesCtrl"
   });
   
 }]);
@@ -26,49 +21,58 @@ et.run(function(editableOptions) {
   editableOptions.theme = 'default';
 });
 
-et.controller("SheetCtrl", ["$scope", "localStorageService", "$stateParams", "$filter", 
+et.controller("ExpensesCtrl", ["$scope", "localStorageService", "$stateParams", "$filter", 
     function($scope, localStorageService, $stateParams, $filter){
   
-  $scope.sheets = [];
+  $scope.budget = 0;
+  $scope.income = [];
+  $scope.expenses = [];
   
-  $scope.getSheets = function(){
-    if(localStorageService.get("sheetData")){
-      $scope.sheets = localStorageService.get("sheetData");
+  $scope.getExpenses = function(){
+    if(localStorageService.get("expenseData")){
+      $scope.budget = localStorageService.get("budgetData");
+      $scope.income = localStorageService.get("incomeData");
+      $scope.expenses = localStorageService.get("expenseData");
     } else {
-      $scope.sheets = [];
+      $scope.budget = 0;
+      $scope.income = [];
+      $scope.expenses = [];
     }
   }
   
-  $scope.addSheet = function(){
-    $scope.sheets.unshift({
-      budget: $scope.budget,
-      sheetId: Date.now(),
-      expenses: undefined
+
+  
+  $scope.addExpense = function(){
+    $scope.expenses.unshift({
+      description: $scope.description,
+      amount: $scope.amount
     });
-    localStorageService.set("sheetData", $scope.sheets);
-    $scope.budget = ""
+    localStorageService.set("expenseData", $scope.expenses);
+    $scope.description = "";
+    $scope.amount = "";
   }
   
-  
-  $scope.addExpense = function(index, exp){
-    $scope.sheets[index].expenses += exp;
-    localStorageService.set("sheetData", $scope.sheets);
-    $scope.expenseForm.$setPristine();
+  $scope.updateBudget = function(){
+    localStorageService.set("expenseData", $scope.expenses);
+    localStorageService.get("incomeData", $scope.income);
   }
   
-  $scope.updateSheet = function(){
-    localStorageService.set("sheetData", $scope.sheets);
-  }
-  
-  $scope.currentId = $stateParams.id;  
-  
-  $scope.deleteSheet = function(start){
-    var confirmDelete = confirm("Are you sure you want to delete this expense sheet?");
+  $scope.deleteIncome = function(start){
+    var confirmDelete = confirm("Are you sure you want to delete this expense?");
     if (confirmDelete) {
-      $scope.sheets.splice(start, 1);
-      localStorageService.set("sheetData", $scope.sheets);
+      $scope.income.splice(start, 1);
+      localStorageService.get("incomeData", $scope.income);
+      }
+      localStorageService.get("incomeData", $scope.income);
+  }
+  
+  $scope.deleteExpense = function(start){
+    var confirmDelete = confirm("Are you sure you want to delete this expense?");
+    if (confirmDelete) {
+      $scope.expenses.splice(start, 1);
+      localStorageService.set("expenseData", $scope.expenses);
     }
-    localStorageService.set("sheetData", $scope.sheets);
+    localStorageService.set("expenseData", $scope.expenses);
   }
   
 }]);
