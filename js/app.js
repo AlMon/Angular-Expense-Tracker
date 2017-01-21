@@ -43,7 +43,7 @@ et.controller("SheetCtrl", ["$scope", "localStorageService", "$stateParams", "$f
     $scope.sheets.unshift({
       budget: $scope.budget,
       sheetId: Date.now(),
-      expenses: 0
+      expenses: undefined
     });
     localStorageService.set("sheetData", $scope.sheets);
     $scope.budget = ""
@@ -53,7 +53,7 @@ et.controller("SheetCtrl", ["$scope", "localStorageService", "$stateParams", "$f
   $scope.addExpense = function(index, exp){
     $scope.sheets[index].expenses += exp;
     localStorageService.set("sheetData", $scope.sheets);
-    $scope.exp = "";
+    $scope.expenseForm.$setPristine();
   }
   
   $scope.updateSheet = function(){
