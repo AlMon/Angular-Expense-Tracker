@@ -25,54 +25,62 @@ et.controller("ExpensesCtrl", ["$scope", "localStorageService", "$stateParams", 
     function($scope, localStorageService, $stateParams, $filter){
   
   $scope.budget = 0;
-  $scope.income = [];
+  $scope.incomes = [];
   $scope.expenses = [];
   
-  $scope.getExpenses = function(){
-    if(localStorageService.get("expenseData")){
+  $scope.getBudget = function(){
+    if(localStorageService.get("expenseData") || localStorageService.get("incomeData") || localStorageService.get("budgetData")){
       $scope.budget = localStorageService.get("budgetData");
-      $scope.income = localStorageService.get("incomeData");
+      $scope.incomes = localStorageService.get("incomeData");
       $scope.expenses = localStorageService.get("expenseData");
     } else {
       $scope.budget = 0;
-      $scope.income = [];
+      $scope.incomes = [];
       $scope.expenses = [];
     }
   }
-  
-
   
   $scope.addExpense = function(){
     $scope.expenses.unshift({
       description: $scope.description,
       amount: $scope.amount
     });
-    localStorageService.set("expenseData", $scope.expenses);
+    localStorageService.set("expenseData", $scope.expenses);   
     $scope.description = "";
-    $scope.amount = "";
+    $scope.amount = "";    
+  }
+  
+  $scope.addIncome = function(){
+    $scope.incomes.unshift({
+      desc: $scope.desc,
+      ina: $scope.ina
+    });
+    localStorageService.set("incomeData", $scope.incomes);
+    $scope.desc = "";
+    $scope.ina = "";
   }
   
   $scope.updateBudget = function(){
     localStorageService.set("expenseData", $scope.expenses);
-    localStorageService.get("incomeData", $scope.income);
-  }
-  
-  $scope.deleteIncome = function(start){
-    var confirmDelete = confirm("Are you sure you want to delete this expense?");
-    if (confirmDelete) {
-      $scope.income.splice(start, 1);
-      localStorageService.get("incomeData", $scope.income);
-      }
-      localStorageService.get("incomeData", $scope.income);
+    localStorageService.get("incomeData", $scope.incomes);
   }
   
   $scope.deleteExpense = function(start){
-    var confirmDelete = confirm("Are you sure you want to delete this expense?");
-    if (confirmDelete) {
+    var confirmDeleteExpense = confirm("Are you sure you want to delete this expense?");
+    if (confirmDeleteExpense) {
       $scope.expenses.splice(start, 1);
       localStorageService.set("expenseData", $scope.expenses);
     }
     localStorageService.set("expenseData", $scope.expenses);
+  }
+  
+  $scope.deleteIncome = function(begin){
+    var confirmDeleteIncome = confirm("Are you sure you want to delete this income?");
+    if (confirmDeleteIncome) {
+      $scope.incomes.splice(begin, 1);
+      localStorageService.get("incomeData", $scope.incomes);
+      }
+      localStorageService.get("incomeData", $scope.incomes);
   }
   
 }]);
