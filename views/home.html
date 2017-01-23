@@ -1,14 +1,35 @@
-<div class="row" ng-init="getExpenses()">
+<div class="row" ng-init="getBudget()">
   <div class="col-3">
-    <form name="sheetForm" ng-submit="addExpense()" novalidate>
+    <form name="expenseForm" ng-submit="addExpense()" novalidate>
       <h5 class="text-center title">Add Expense:</h5>
-      <input name="budget" type="number" ng-model="amount" required placeholder="What's Today's Budget?" ng-required="true">
+      <input name="expense-description" type="text" ng-model="description" required placeholder="Expense Description" ng-required="true">
+      <input name="expense-amount" type="number" ng-model="amount" required placeholder="What's The Amount?" ng-required="true">
       <div class="center">
-        <button name="submit" ng-disabled="sheetForm.$invalid" class="add-btn">Add Budget Sheet</button>
+        <button name="submit" ng-disabled="expenseForm.$invalid" class="add-btn">Add Expense</button>
+      </div>
+    </form>
+    <form name="incomeForm" ng-submit="addIncome()" novalidate>
+      <h5 class="text-center title">Add Income:</h5>
+      <input name="income-description" type="text" ng-model="desc" required placeholder="Income Description" ng-required="true">
+      <input name="income-amount" type="number" ng-model="ina" required placeholder="What's The Amount?" ng-required="true">
+      <div class="center">
+        <button name="submit" ng-disabled="incomeForm.$invalid" class="add-btn">Add Income</button>
       </div>
     </form>
   </div>
   <div class="col-9">    
     <h1 class="text-center">{{budget | currency}}</h1>
+    <div ng-repeat="expense in expenses">
+      <p>{{expense.description}}</p>
+      <p>{{expense.amount | currency}}</p>
+      <p>{{expense.total}}</p>
+      <button ng-click="deleteExpense($index)" class="delete-btn">Delete</button>
+    </div>
+    <div ng-repeat="income in incomes">
+      <p>{{income.desc}}</p>
+      <p>{{income.ina | currency}}</p>
+      <p>{{income.intotal}}</p>
+      <button ng-click="deleteIncome($index)" class="delete-btn">Delete</button>
+    </div>
   </div>
 </div>
