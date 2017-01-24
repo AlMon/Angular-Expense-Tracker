@@ -18,18 +18,20 @@
     </form>
   </div>
   <div class="col-9">    
-    <h1 class="text-center">{{budget | currency}}</h1>
-    <div ng-repeat="expense in expenses">
-      <p>{{expense.description}}</p>
-      <p>{{expense.amount | currency}}</p>
-      <p>{{expense.total}}</p>
-      <button ng-click="deleteExpense($index)" class="delete-btn">Delete</button>
-    </div>
+      <h1 class="text-center">{{budget | currency}}</h1>
+      <div ng-repeat="expense in expenses">
+        <p>{{expense.description}}</p>
+        <p>{{expense.amount | currency}}</p>
+        <p>{{expense.total}}</p>
+        <button ng-click="deleteExpense($index)" class="delete-btn">Delete</button>
+      </div>
+  </div>
+  <div class="col-9">
     <div ng-repeat="income in incomes">
-      <p>{{income.desc}}</p>
-      <p>{{income.ina | currency}}</p>
+      <p>{{income.indesc}}</p>
+      <p>{{income.inam | currency}}</p>
       <p>{{income.intotal}}</p>
       <button ng-click="deleteIncome($index)" class="delete-btn">Delete</button>
-    </div>
+  </div>
   </div>
 </div>

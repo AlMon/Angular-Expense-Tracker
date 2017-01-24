@@ -29,7 +29,7 @@ et.controller("ExpensesCtrl", ["$scope", "localStorageService", "$stateParams", 
   $scope.expenses = [];
   
   $scope.getBudget = function(){
-    if(localStorageService.get("expenseData") || localStorageService.get("incomeData") || localStorageService.get("budgetData")){
+    if(localStorageService.get("expenseData") && localStorageService.get("incomeData") && localStorageService.get("budgetData")){
       $scope.budget = localStorageService.get("budgetData");
       $scope.incomes = localStorageService.get("incomeData");
       $scope.expenses = localStorageService.get("expenseData");
@@ -52,8 +52,8 @@ et.controller("ExpensesCtrl", ["$scope", "localStorageService", "$stateParams", 
   
   $scope.addIncome = function(){
     $scope.incomes.unshift({
-      desc: $scope.desc,
-      ina: $scope.ina
+      indesc: $scope.indesc,
+      inam: $scope.inam
     });
     localStorageService.set("incomeData", $scope.incomes);
     $scope.desc = "";
